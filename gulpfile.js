@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const requireDir = require('require-dir');
 
+var deploy      = require('gulp-gh-pages');
 requireDir('./gulp');
 
 /*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -20,3 +21,13 @@ gulp.task('live', gulp.series('clean:live', 'build', 'build:push'));
 |  Run development environment
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 gulp.task('default', gulp.series('clean', 'compile', 'watch'));
+/**
+ * Push build to gh-pages
+ */
+gulp.task('deploy', function () {
+    return gulp.src("./dist/**/*")
+        .pipe(deploy({
+            remoteUrl: "https://github.com/hyungju/hnp-site.git",
+            branch: 'master'
+        }))
+});
